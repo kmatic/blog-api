@@ -30,7 +30,7 @@ exports.createPost = [
 exports.getPosts = async (req, res, next) => {
     try {
         const posts = await Post.find().sort({ timestamp: -1 }).exec();
-        if(!posts) {
+        if (!posts) {
             return res.status(400).json({ error: 'Posts not found' });
         }
         res.status(200).json({ posts });
