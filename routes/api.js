@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 //POSTS
 
 // create a post
-router.post('/posts/', postController.createPost);
+router.post('/posts', postController.createPost);
 
 // get all posts
 router.get('/posts', postController.getPosts);
