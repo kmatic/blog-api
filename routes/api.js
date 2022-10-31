@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 // import controllers
 const commentController = require('../controllers/commentController');
@@ -13,12 +14,14 @@ router.get('/', (req, res) => {
 
 // Map to CRUD 
 
-// STILL NEEDS AUTH MIDDLEWARE
-
 //POSTS
 
 // create a post
-router.post('/posts', postController.createPost);
+router.post(
+    '/posts',
+    passport.authenticate('jwt', {session: false}),
+    postController.createPost
+);
 
 // get all posts
 router.get('/posts', postController.getPosts);
@@ -27,10 +30,18 @@ router.get('/posts', postController.getPosts);
 router.get('/posts/:postid', postController.getPost);
 
 // update specific post 
-router.put('/posts/:postid', postController.updatePost);
+router.put(
+    '/posts/:postid',
+    passport.authenticate('jwt', {session: false}),
+    postController.updatePost
+);
 
 // delete specific post
-router.delete('/posts/:postid', postController.deletePost);
+router.delete(
+    '/posts/:postid',
+    passport.authenticate('jwt', {session: false}),
+    postController.deletePost
+);
 
 // COMMENTS
 
@@ -44,12 +55,23 @@ router.get('/posts/:postid/comments', commentController.getComments);
 router.get('/posts/:postid/comments/:commentid', commentController.getComment);
 
 // update a comment 
-router.put('/posts/:postid/comments/:commentid', commentController.updateComment);
+router.put(
+    '/posts/:postid/comments/:commentid',
+    passport.authenticate('jwt', {session: false}),
+    commentController.updateComment
+);
 
 // delete a comment
-router.delete('/posts/:postid/comments/:commentid', commentController.deleteComment);
+router.delete(
+    '/posts/:postid/comments/:commentid',
+    passport.authenticate('jwt', {session: false}),
+    commentController.deleteComment
+);
 
 // USER
+
+// signup user
+// router.post('/signup', userController.signup); 
 
 // login user
 router.post('/login', userController.login);
